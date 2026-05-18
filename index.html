@@ -1,25 +1,49 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <title>Demo TikTok</title>
+  <meta charset="UTF-8" />
+  <title>Demo TikTok Login - RV Negócios</title>
 </head>
-<body style="font-family: Arial; text-align:center; margin-top:50px;">
+
+<body style="font-family: Arial; text-align:center; margin-top:60px;">
 
   <h1>Demo TikTok Login</h1>
 
-  <button onclick="login()">Login com TikTok</button>
+  <button onclick="login()" style="padding:12px 20px; font-size:16px;">
+    Login com TikTok
+  </button>
 
-  <pre id="output" style="margin-top:20px;"></pre>
+  <pre id="output" style="margin-top:30px;"></pre>
 
   <script>
+    // 🔐 SEU CLIENT KEY DO TIKTOK
+    const clientKey =
+awt2w24zpg2i93y0 ;
+
+    // 🌐 DOMÍNIO OFICIAL
+    const redirectUri = "https://rvnegocioss.com.br/callback";
+
+    const scope = "user.info.basic,video.upload,video.publish";
+
     function login() {
-      window.location.href =
-      "https://www.tiktok.com/v2/auth/authorize/?client_key=SEU_CLIENT_KEY&response_type=code&scope=user.info.basic&redirect_uri=https://SEU-SITE.pages.dev/callback";
+      const url =
+        "https://www.tiktok.com/v2/auth/authorize/?" +
+        "client_key=" + clientKey +
+        "&response_type=code" +
+        "&scope=" + scope +
+        "&redirect_uri=" + encodeURIComponent(redirectUri);
+
+      window.location.href = url;
     }
 
     const params = new URLSearchParams(window.location.search);
     const code = params.get("code");
 
     if (code) {
-      document.body
+      document.getElementById("output").innerHTML =
+        "Login TikTok OK<br><br>Code:<br>" + code;
+    }
+  </script>
+
+</body>
+</html>
