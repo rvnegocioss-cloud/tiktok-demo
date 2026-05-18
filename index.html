@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Demo TikTok</title>
+</head>
+<body style="font-family: Arial; text-align:center; margin-top:50px;">
+
+  <h1>Demo TikTok Login</h1>
+
+  <button onclick="login()">Login com TikTok</button>
+
+  <pre id="output" style="margin-top:20px;"></pre>
+
+  <script>
+    function login() {
+      window.location.href =
+      "https://www.tiktok.com/v2/auth/authorize/?client_key=SEU_CLIENT_KEY&response_type=code&scope=user.info.basic&redirect_uri=https://SEU-SITE.pages.dev/callback";
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get("code");
+
+    if (code) {
+      document.body
