@@ -2,12 +2,12 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <title>Demo TikTok Login - RV Negócios</title>
+  <title>Login TikTok - RV Negócios</title>
 </head>
 
 <body style="font-family: Arial; text-align:center; margin-top:60px;">
 
-  <h1>Demo TikTok Login</h1>
+  <h1>Login com TikTok</h1>
 
   <button onclick="login()" style="padding:12px 20px; font-size:16px;">
     Login com TikTok
@@ -16,32 +16,40 @@
   <pre id="output" style="margin-top:30px;"></pre>
 
   <script>
-    // 🔐 SEU CLIENT KEY DO TIKTOK
-    const clientKey =
-awt2w24zpg2i93y0 ;
+    // 🔐 COLOQUE SEU CLIENT KEY REAL AQUI
+    const clientKey = awt2w24zpg2i93y0;
 
-    // 🌐 DOMÍNIO OFICIAL
+    // 🌐 URL oficial do seu app
     const redirectUri = "https://rvnegocioss.com.br/callback";
 
-    const scope = "user.info.basic,video.upload,video.publish";
+    const scope = "user.info.basic,video.publish,video.upload";
 
     function login() {
-      const url =
-        "https://www.tiktok.com/v2/auth/authorize/?" +
-        "client_key=" + clientKey +
-        "&response_type=code" +
-        "&scope=" + scope +
-        "&redirect_uri=" + encodeURIComponent(redirectUri);
+      const url = new URL("https://www.tiktok.com/v2/auth/authorize/");
 
-      window.location.href = url;
+      url.searchParams.set("client_key", clientKey);
+      url.searchParams.set("response_type", "code");
+      url.searchParams.set("scope", scope);
+      url.searchParams.set("redirect_uri", redirectUri);
+
+      window.location.href = url.toString();
     }
 
+    // 📩 captura retorno do TikTok
     const params = new URLSearchParams(window.location.search);
     const code = params.get("code");
 
     if (code) {
       document.getElementById("output").innerHTML =
-        "Login TikTok OK<br><br>Code:<br>" + code;
+        "✅ LOGIN OK<br><br>CODE:<br>" + code;
+    }
+
+    // ❌ erro de auth
+    const error = params.get("error");
+
+    if (error) {
+      document.getElementById("output").innerHTML =
+        "❌ ERRO LOGIN TIKTOK:<br>" + error;
     }
   </script>
 
